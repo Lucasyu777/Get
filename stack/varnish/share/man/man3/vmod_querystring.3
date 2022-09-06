@@ -1,0 +1,351 @@
+.\" Man page generated from reStructuredText.
+.
+.TH VMOD_QUERYSTRING 3 "" "" ""
+.SH NAME
+vmod_querystring \- Varnish Query-String Module
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.\" 
+.
+.\" NB:  This file is machine generated, DO NOT EDIT!
+.
+.\" 
+.
+.\" Edit vmod_querystring.vcc and run make instead
+.
+.\" 
+.
+.SH DESCRIPTION
+.sp
+This module is a tool for query\-string filtering in Varnish Cache. It works
+with \fBapplication/x\-www\-form\-urlencoded\fP strings that are commonly used on
+the web. Such a query\-string is interpreted as a key/values store encoded with
+the following syntax:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+key=value&other=value1&other=value2
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+The query\-string parsing is very lenient and will tolerate malformed strings.
+Assuming that a legitimate client might build a malformed query\-string that
+would be empty or include a trailing & or spurious &s in the middle, it may be
+a good idea not to fail such requests and instead get rid of the noise that
+might misguide Varnish and hurt your hit rate. Empty parameters are ignored,
+and parameters are considered empty when their names are empty:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+next=empty&&previous=empty&=no\-name\-means\-empty&name\-only\-is\-fine
+
+Once cleaned:
+next=empty&previous=empty&name\-only\-is\-fine
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+And since this module works with query\-strings, a filter\(aqs input is assumed to
+be a URL. The query\-string is then the part of the URL after a question mark
+when there\(aqs one. The rest of the URL is always left untouched by the filters.
+Proper encoding of the URL isn\(aqt checked and only separators (\fB?\fP, \fB&\fP and
+\fB=\fP) are considered.
+.sp
+For example:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+/path?query\-string
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+If it doesn\(aqt make any difference to your back\-end application, you may also
+sort the parameters inside the query\-string and remove duplicates. It will
+make the hashing more deterministic for Varnish, possibly improving your hit
+rate even more.
+.SS new xfilter = querystring.filter(BOOL sort, BOOL uniq, ENUM match)
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+new xfilter = querystring.filter(
+   BOOL sort=0,
+   BOOL uniq=0,
+   ENUM {name, param} match=name
+)
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+A filter is first set up in \fIvcl_init\fP and then used during transactions. The
+setup includes the creation of the filter to which you add criteria. During
+transactions, you may apply the filter to URLs (like \fBreq.url\fP or a
+\fBLocation\fP header) or extract the filtered query\-string.
+.sp
+A filter may sort its parameters, but by default it will maintain order. The
+filter constructor takes an optional \fBsort\fP argument, you may use its name
+to improve readability.
+.INDENT 0.0
+.TP
+.B Example
+.INDENT 7.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+import querystring;
+
+sub vcl_init {
+    new qf = querystring.filter(sort = true);
+    qf.add_string("_"); # a timestamp used to bypass caches
+    qf.add_glob("utm_*"); # google analytics parameters
+    qf.add_regex("sess[0\-9]+"); # anti\-CSRF token
+}
+
+sub vcl_hash {
+    hash_data(qf.apply()); # implicitly on req.url
+    hash_data(req.http.host);
+    return (lookup);
+}
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.sp
+It is also possible for a filter to either match parameters by name, or by
+themselves. By default the criteria are tested against the name only, leaving
+alone the contents starting at the equal sign when there\(aqs one. For that the
+constructor takes another optional \fBmatch\fP argument that can take either
+\fBname\fP (default) or \fBparam\fP\&.
+.INDENT 0.0
+.TP
+.B Example
+.INDENT 7.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+sub vcl_init {
+    new fr = querystring.filter(match = param);
+    fr.add_regex("^lang=fr(\-..)?$");
+}
+
+sub vcl_recv {
+    if (fr.extract()) {
+        set req.backend_hint = www_fr;
+    }
+}
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.sp
+Finally, a filter can drop consecutive duplicate parameters if the optional
+\fBuniq\fP argument. Combined with a sort, this effectively removes all the
+duplicates from the URL. The \fBmatch\fP argument determines how parameters are
+considered duplicates.
+.sp
+Since most of the time it is either \fBreq.url\fP or \fBbereq.url\fP that is
+filtered, omitting the \fBurl\fP argument for functions that take one will
+default to one of them depending on whether the function was called during a
+client or backend transaction.
+.SS VOID xfilter.add_string(STRING)
+.INDENT 0.0
+.TP
+.B Description
+Use the \fBstring\fP argument as an exact\-match criterion.
+.UNINDENT
+.SS VOID xfilter.add_glob(STRING)
+.INDENT 0.0
+.TP
+.B Description
+Use the \fBstring\fP argument as a GLOB pattern matching criterion. The
+underlying \fBfnmatch\fP function may fail, in which case the query\-param
+is kept to avoid spurious filtering and the error is logged.
+.UNINDENT
+.SS VOID xfilter.add_regex(REGEX)
+.INDENT 0.0
+.TP
+.B Description
+The \fBstring\fP argument is compiled to a regular expression that will be
+used as the matching criterion. If the regular expression is invalid, it
+will fail the \fBvcl.load\fP command and report the error in the
+\fBvarnish\-cli\fP output.
+.UNINDENT
+.SS STRING xfilter.apply([STRING url], ENUM mode)
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+STRING xfilter.apply([STRING url], ENUM {keep, drop} mode=drop)
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B Description
+The \fBurl\fP argument is filtered against the filter\(aqs criteria, previously
+added using the \fBadd_*()\fP methods in \fBvcl_init\fP\&. The result is a new
+URL with a clean (possibly sorted and de\-duplicated) query\-string.
+.sp
+Depending on the optional \fBmode\fP argument the matching criteria act as a
+black list for \fBdrop\fP (default) or a white list for \fBkeep\fP\&. In the
+resulting URL the query\-string will either contain only the matching
+parameters or everything but them.
+.TP
+.B Example
+.INDENT 7.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+set req.url = myfilter.apply(mode = drop);
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.SS STRING xfilter.extract([STRING url], ENUM mode)
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+STRING xfilter.extract(
+      [STRING url],
+      ENUM {keep, drop} mode=drop
+)
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.TP
+.B Description
+This method works exactly like \fB\&.apply\fP and discards all URL parts but
+the query\-string.
+.UNINDENT
+.SS STRING clean([STRING url])
+.INDENT 0.0
+.TP
+.B Description
+This is a shorthand function that works like applying a filter with no
+criteria. It will keep all parameters and shave off the empty ones.
+.TP
+.B Example
+.INDENT 7.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+set req.url = querystring.clean();
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.SS STRING sort([STRING url], BOOL uniq=0)
+.INDENT 0.0
+.TP
+.B Description
+This is a shorthand function that works like applying a sorting\-enabled
+filter with no criteria matching full parameters, not just their names. It
+will keep all parameters and shave off the empty ones. If the \fBuniq\fP
+argument is \fBtrue\fP duplicate parameters are also removed.
+.TP
+.B Example
+.INDENT 7.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+set req.url = querystring.sort();
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.SS STRING remove([STRING url])
+.INDENT 0.0
+.TP
+.B Description
+This is a shorthand function that works like applying a filter with a
+catch\-all criteria. It will return the given URL with its query\-string
+removed. For better efficiency, it is not backed by an actual filter.
+.TP
+.B Example
+.INDENT 7.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+set req.url = querystring.remove();
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.SH COPYRIGHT
+.sp
+Copyright (C) 2012\-2021  Dridi Boukelmoune.
+License GPLv3+: GNU GPL version 3 or later <\fI\%http://gnu.org/licenses/gpl.html\fP>.
+.sp
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.SH SEE ALSO
+.sp
+\fBvcl\fP(7),
+\fBvarnishd\fP(1),
+\fBvarnish\-cli\fP(7),
+\fBglob\fP(7)
+.nf
+
+RFC 1866 Section 8.2.1, The form\-urlencoded Media Type
+RFC 3986 Section 3, Syntax Components
+RFC 7234 Section 2, Overview of Cache Operation
+.fi
+.sp
+.\" Generated by docutils manpage writer.
+.

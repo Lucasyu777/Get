@@ -1,0 +1,282 @@
+.\" Man page generated from reStructuredText.
+.
+.TH VCL-PROBE 7 "" "" ""
+.SH NAME
+VCL-probe \- Configuring Backend Health Probes
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.\" Copyright (c) 2021 Varnish Software AS
+.\" SPDX-License-Identifier: BSD-2-Clause
+.\" See LICENSE file for full text of license
+.
+.SH BACKEND HEALTH PROBES
+.sp
+Varnish can be configured to periodically send a request to test if a
+backend is answering and thus "healthy".
+.sp
+Probes can be configured per backend:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+backend foo {
+    [...]
+    .probe = {
+        [...]
+    }
+}
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+They can be named and shared between backends:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+probe light {
+    [...]
+}
+
+backend foo {
+    .probe = light;
+}
+
+backend bar {
+    .probe = light;
+}
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Or a \fBdefault\fP probe can be defined, which applies to all backends
+without a specific \fB\&.probe\fP configured:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+probe default {
+    [...]
+}
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+The basic syntax is the same as for backends:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+probe name {
+    .attribute1 = value;
+    .attribute2 = "value";
+    [...]
+}
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+There are no mandatory attributes, they all have defaults.
+.SH ATTRIBUTE .URL
+.sp
+The URL to query.  Defaults to \fB/\fP:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+\&.url = "/health\-probe";
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.SH ATTRIBUTE .REQUEST
+.sp
+Can be used to specify a full HTTP/1.1 request to be sent:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+\&.request = "GET / HTTP/1.1"
+    "Host: example.com"
+    "X\-Magic: We\(aqre fine with this."
+    "Connection: close";
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Each of the strings will have \fBCRNL\fP appended and a final HTTP
+header block terminating \fBCRNL\fP will be appended as well.
+.sp
+Because connection shutdown is part of the health check,
+\fBConnection: close\fP is mandatory.
+.SH ATTRIBUTE .EXPECTED_RESPONSE
+.sp
+The expected HTTP status, defaults to \fB200\fP:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+\&.expected_response = 418;
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.SH ATTRIBUTE .TIMEOUT
+.sp
+How fast the probe must succeed, default is two seconds:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+\&.timeout = 10s;
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.SH ATTRIBUTE .INTERVAL
+.sp
+Time between probes, default is five seconds:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+\&.interval = 1m;
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.SH THE BACKEND HEALTH SHIFT REGISTER
+.sp
+Backend health probes uses a 64 stage shift register to remember the
+most recent health probes and to evaluate the total health of the backend.
+.sp
+In the CLI, a good backend health status looks like this:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+varnish> backend.list \-p boot.backend
+Backend name    Admin    Probe    Health     Last change
+boot.backend    probe    5/5      healthy    Wed, 13 Jan 2021 10:31:50 GMT
+ Current states  good:  5 threshold:  4 window:  5
+  Average response time of good probes: 0.000793
+  Oldest ================================================== Newest
+  4444444444444444444444444444444444444444444444444444444444444444 Good IPv4
+  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX Good Xmit
+  RRRRRRRRRRRRRRRRRRRRRRR\-\-\-\-RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR Good Recv
+  HHHHHHHHHHHHHHHHHHHHHHH\-\-\-\-\-\-\-\-HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH Happy
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Starting from the bottom, the last line shows that this backend has been
+declared "Happy" for most the 64 health probes, but there were some
+trouble some while ago.
+.sp
+However, in this case the \fB\&.window\fP is configured to five, and the
+\fB\&.threshold\fP is set to four, so at this point in time, the backend
+is considered fully healthy.
+.sp
+An additional \fB\&.initial\fP fills that many "happy" entries in the
+shift register when the VCL is loaded, so that backends can quickly
+become healthy, even if their health is normally considered over
+many samples:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+\&.interval = 1s;
+\&.window = 60;
+\&.threshold = 45;
+\&.initial = 43;
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+This backend will be considered healthy if three out of four health
+probes in the last minute were good, but it becomes healthy as soon
+as two good probes have happened after the VCL was loaded.
+.sp
+The default values are:
+.INDENT 0.0
+.IP \(bu 2
+\fB\&.window\fP = 8
+.IP \(bu 2
+\fB\&.threshold\fP = 3
+.IP \(bu 2
+\fB\&.initial\fP = one less than \fB\&.threshold\fP
+.UNINDENT
+.SS SEE ALSO
+.INDENT 0.0
+.IP \(bu 2
+\fIvarnishd(1)\fP
+.IP \(bu 2
+\fIvcl(7)\fP
+.IP \(bu 2
+\fIvcl\-backend(7)\fP
+.IP \(bu 2
+\fIvmod_directors(3)\fP
+.IP \(bu 2
+\fIvmod_std(3)\fP
+.UNINDENT
+.SS HISTORY
+.sp
+VCL was developed by Poul\-Henning Kamp in cooperation with Verdens
+Gang AS, Redpill Linpro and Varnish Software.  This manual page is
+written by Per Buer, Poul\-Henning Kamp, Martin Blix Grydeland,
+Kristian Lyngstøl, Lasse Karstensen and others.
+.SS COPYRIGHT
+.sp
+This document is licensed under the same license as Varnish
+itself. See LICENSE for details.
+.INDENT 0.0
+.IP \(bu 2
+Copyright (c) 2006 Verdens Gang AS
+.IP \(bu 2
+Copyright (c) 2006\-2021 Varnish Software AS
+.UNINDENT
+.\" Generated by docutils manpage writer.
+.

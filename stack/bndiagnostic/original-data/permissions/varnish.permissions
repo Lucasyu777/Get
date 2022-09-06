@@ -1,0 +1,334 @@
+varnish:
+total 40
+drwxr-xr-x 10 root root 4096 Aug 23 17:16 .
+drwxr-xr-x 19 root root 4096 Aug 23 17:34 ..
+drwxr-xr-x  2 root root 4096 Aug  8 20:24 bin
+drwxr-xr-x  3 root root 4096 Aug 23 17:16 etc
+drwxr-xr-x  3 root root 4096 Aug  8 20:24 include
+drwxr-xr-x  4 root root 4096 Aug  8 20:24 lib
+drwxr-xr-x  2 root root 4096 Aug  8 20:24 licenses
+drwxr-xr-x  2 root root 4096 Aug  8 20:24 sbin
+drwxr-xr-x  6 root root 4096 Aug  8 20:24 share
+drwxr-xr-x  3 root root 4096 Aug  8 20:24 var
+
+varnish/bin:
+total 800
+drwxr-xr-x  2 root root   4096 Aug  8 20:24 .
+drwxr-xr-x 10 root root   4096 Aug 23 17:16 ..
+-rwxr-xr-x  1 root root  56000 May  5 10:36 varnishadm
+-rwxr-xr-x  1 root root  39904 May  5 10:36 varnishhist
+-rwxr-xr-x  1 root root  23328 May  5 10:36 varnishlog
+-rwxr-xr-x  1 root root  48048 May  5 10:36 varnishncsa
+-rwxr-xr-x  1 root root  47984 May  5 10:36 varnishstat
+-rwxr-xr-x  1 root root  22704 May  5 10:36 varnishstat_help_gen
+-rwxr-xr-x  1 root root 524016 May  5 10:36 varnishtest
+-rwxr-xr-x  1 root root  39808 May  5 10:36 varnishtop
+
+varnish/etc:
+total 12
+drwxr-xr-x  3 root root 4096 Aug 23 17:16 .
+drwxr-xr-x 10 root root 4096 Aug 23 17:16 ..
+drwxrwxr-x  3 root root 4096 Aug 23 17:33 varnish
+
+varnish/etc/varnish:
+total 24
+drwxrwxr-x 3 root root 4096 Aug 23 17:33 .
+drwxr-xr-x 3 root root 4096 Aug 23 17:16 ..
+drwxr-xr-x 2 root root 4096 Aug 23 17:33 bitnami
+-rw-r--r-- 1 root root 5455 Aug 23 17:33 default.vcl
+lrwxrwxrwx 1 root root   25 Aug 23 17:33 memory.conf -> bitnami/memory-micro.conf
+-rw-rw-r-- 1 root root 1630 Aug 23 17:16 wordpress.vcl.disabled
+
+varnish/etc/varnish/bitnami:
+total 32
+drwxr-xr-x 2 root root 4096 Aug 23 17:33 .
+drwxrwxr-x 3 root root 4096 Aug 23 17:33 ..
+-rw-r--r-- 1 root root  135 Aug 23 17:33 memory-2xlarge.conf
+-rw-r--r-- 1 root root  134 Aug 23 17:33 memory-large.conf
+-rw-r--r-- 1 root root  134 Aug 23 17:33 memory-medium.conf
+-rw-r--r-- 1 root root  133 Aug 23 17:33 memory-micro.conf
+-rw-r--r-- 1 root root  134 Aug 23 17:33 memory-small.conf
+-rw-r--r-- 1 root root  135 Aug 23 17:33 memory-xlarge.conf
+
+varnish/include:
+total 12
+drwxr-xr-x  3 root root 4096 Aug  8 20:24 .
+drwxr-xr-x 10 root root 4096 Aug 23 17:16 ..
+drwxr-xr-x  7 root root 4096 Aug  8 20:24 varnish
+
+varnish/include/varnish:
+total 208
+drwxr-xr-x 7 root root  4096 Aug  8 20:24 .
+drwxr-xr-x 3 root root  4096 Aug  8 20:24 ..
+drwxr-xr-x 2 root root  4096 Aug  8 20:24 cache
+drwxr-xr-x 2 root root  4096 Aug  8 20:24 common
+-rw-r--r-- 1 root root  1991 May  5 10:36 miniobj.h
+drwxr-xr-x 2 root root  4096 Aug  8 20:24 tbl
+drwxr-xr-x 2 root root  4096 Aug  8 20:24 vapi
+-rw-r--r-- 1 root root  4142 May  5 10:36 vas.h
+-rw-r--r-- 1 root root  1771 May  5 10:36 vav.h
+-rw-r--r-- 1 root root  2756 May  5 10:36 vbh.h
+-rw-r--r-- 1 root root  4383 May  5 10:36 vbm.h
+-rw-r--r-- 1 root root  4106 May  5 10:36 vcl.h
+-rw-r--r-- 1 root root  2616 May  5 10:36 vcli.h
+-rw-r--r-- 1 root root  1608 May  5 10:36 vcs.h
+-rw-r--r-- 1 root root  5422 May  5 10:36 vdef.h
+-rw-r--r-- 1 root root   191 May  5 10:36 vmod_abi.h
+-rw-r--r-- 1 root root 19958 May  5 10:36 vqueue.h
+-rw-r--r-- 1 root root  2357 May  5 10:36 vre.h
+-rw-r--r-- 1 root root  1780 May  5 10:36 vrnd.h
+-rw-r--r-- 1 root root 20585 May  5 10:36 vrt.h
+-rw-r--r-- 1 root root  6265 May  5 10:36 vrt_obj.h
+-rw-r--r-- 1 root root  3099 May  5 10:36 vsa.h
+-rw-r--r-- 1 root root  4441 May  5 10:36 vsb.h
+-rw-r--r-- 1 root root  2183 May  5 10:36 vsha256.h
+-rw-r--r-- 1 root root  2859 May  5 10:36 vtcp.h
+-rw-r--r-- 1 root root  1831 May  5 10:36 vtim.h
+-rw-r--r-- 1 root root 26684 May  5 10:36 vtree.h
+-rw-r--r-- 1 root root  2847 May  5 10:36 vut.h
+-rw-r--r-- 1 root root  4103 May  5 10:36 vut_options.h
+drwxr-xr-x 2 root root  4096 Aug  8 20:24 waiter
+
+varnish/include/varnish/cache:
+total 64
+drwxr-xr-x 2 root root  4096 Aug  8 20:24 .
+drwxr-xr-x 7 root root  4096 Aug  8 20:24 ..
+-rw-r--r-- 1 root root  3012 May  5 10:36 cache_backend.h
+-rw-r--r-- 1 root root  2159 May  5 10:36 cache_director.h
+-rw-r--r-- 1 root root  4278 May  5 10:36 cache_filter.h
+-rw-r--r-- 1 root root 23383 May  5 10:36 cache.h
+-rw-r--r-- 1 root root 16119 May  5 10:36 cache_varnishd.h
+
+varnish/include/varnish/common:
+total 12
+drwxr-xr-x 2 root root 4096 Aug  8 20:24 .
+drwxr-xr-x 7 root root 4096 Aug  8 20:24 ..
+-rw-r--r-- 1 root root 3331 May  5 10:36 common_param.h
+
+varnish/include/varnish/tbl:
+total 264
+drwxr-xr-x 2 root root  4096 Aug  8 20:24 .
+drwxr-xr-x 7 root root  4096 Aug  8 20:24 ..
+-rw-r--r-- 1 root root  1703 May  5 10:36 acct_fields_bereq.h
+-rw-r--r-- 1 root root  1773 May  5 10:36 acct_fields_req.h
+-rw-r--r-- 1 root root  1836 May  5 10:36 backend_poll.h
+-rw-r--r-- 1 root root  2427 May  5 10:36 ban_arg_oper.h
+-rw-r--r-- 1 root root  1759 May  5 10:36 ban_oper.h
+-rw-r--r-- 1 root root  2233 May  5 10:36 ban_vars.h
+-rw-r--r-- 1 root root  1865 May  5 10:36 boc_state.h
+-rw-r--r-- 1 root root  1897 May  5 10:36 body_status.h
+-rw-r--r-- 1 root root  2005 May  5 10:36 bo_flags.h
+-rw-r--r-- 1 root root 11547 May  5 10:36 cli_cmds.h
+-rw-r--r-- 1 root root  2724 May  5 10:36 debug_bits.h
+-rw-r--r-- 1 root root  2844 May  5 10:36 feature_bits.h
+-rw-r--r-- 1 root root  3566 May  5 10:36 h2_error.h
+-rw-r--r-- 1 root root  4067 May  5 10:36 h2_frames.h
+-rw-r--r-- 1 root root  2570 May  5 10:36 h2_settings.h
+-rw-r--r-- 1 root root  1865 May  5 10:36 h2_stream.h
+-rw-r--r-- 1 root root  2148 May  5 10:36 htc.h
+-rw-r--r-- 1 root root  5104 May  5 10:36 http_headers.h
+-rw-r--r-- 1 root root  3709 May  5 10:36 http_response.h
+-rw-r--r-- 1 root root  1771 May  5 10:36 locks.h
+-rw-r--r-- 1 root root   252 May  5 10:36 mgt_vcc.h
+-rw-r--r-- 1 root root  2183 May  5 10:36 obj_attr.h
+-rw-r--r-- 1 root root  1732 May  5 10:36 oc_exp_flags.h
+-rw-r--r-- 1 root root  1788 May  5 10:36 oc_flags.h
+-rw-r--r-- 1 root root 47214 May  5 10:36 params.h
+-rw-r--r-- 1 root root  1852 May  5 10:36 req_flags.h
+-rw-r--r-- 1 root root  2335 May  5 10:36 sess_attr.h
+-rw-r--r-- 1 root root  2682 May  5 10:36 sess_close.h
+-rw-r--r-- 1 root root  1889 May  5 10:36 symbol_kind.h
+-rw-r--r-- 1 root root  3529 May  5 10:36 vcl_returns.h
+-rw-r--r-- 1 root root   170 May  5 10:36 vcl_states.h
+-rw-r--r-- 1 root root  1975 May  5 10:36 vhd_fsm_funcs.h
+-rw-r--r-- 1 root root  8789 May  5 10:36 vhd_fsm.h
+-rw-r--r-- 1 root root  2052 May  5 10:36 vhd_return.h
+-rw-r--r-- 1 root root  7847 May  5 10:36 vhp_huffman.h
+-rw-r--r-- 1 root root  1997 May  5 10:36 vhp_static.h
+-rw-r--r-- 1 root root   298 May  5 10:36 vrt_stv_var.h
+-rw-r--r-- 1 root root  2133 May  5 10:36 vsc_levels.h
+-rw-r--r-- 1 root root  1693 May  5 10:36 vsig_list.h
+-rw-r--r-- 1 root root 22524 May  5 10:36 vsl_tags.h
+-rw-r--r-- 1 root root  3174 May  5 10:36 vsl_tags_http.h
+-rw-r--r-- 1 root root  1704 May  5 10:36 waiters.h
+
+varnish/include/varnish/vapi:
+total 60
+drwxr-xr-x 2 root root  4096 Aug  8 20:24 .
+drwxr-xr-x 7 root root  4096 Aug  8 20:24 ..
+-rw-r--r-- 1 root root  6592 May  5 10:36 vapi_options.h
+-rw-r--r-- 1 root root  2624 May  5 10:36 voptget.h
+-rw-r--r-- 1 root root  5149 May  5 10:36 vsc.h
+-rw-r--r-- 1 root root  1890 May  5 10:36 vsig.h
+-rw-r--r-- 1 root root 14709 May  5 10:36 vsl.h
+-rw-r--r-- 1 root root  3823 May  5 10:36 vsl_int.h
+-rw-r--r-- 1 root root  5661 May  5 10:36 vsm.h
+
+varnish/include/varnish/waiter:
+total 12
+drwxr-xr-x 2 root root 4096 Aug  8 20:24 .
+drwxr-xr-x 7 root root 4096 Aug  8 20:24 ..
+-rw-r--r-- 1 root root 2641 May  5 10:36 waiter.h
+
+varnish/lib:
+total 292
+drwxr-xr-x  4 root root   4096 Aug  8 20:24 .
+drwxr-xr-x 10 root root   4096 Aug 23 17:16 ..
+lrwxrwxrwx  1 root root     22 May  5 10:36 libvarnishapi.so -> libvarnishapi.so.2.0.0
+lrwxrwxrwx  1 root root     22 May  5 10:36 libvarnishapi.so.2 -> libvarnishapi.so.2.0.0
+-rwxr-xr-x  1 root root 282376 May  5 10:36 libvarnishapi.so.2.0.0
+drwxr-xr-x  2 root root   4096 Aug  8 20:24 pkgconfig
+drwxr-xr-x  3 root root   4096 Aug  8 20:24 varnish
+
+varnish/lib/pkgconfig:
+total 12
+drwxr-xr-x 2 root root 4096 Aug  8 20:24 .
+drwxr-xr-x 4 root root 4096 Aug  8 20:24 ..
+-rw-r--r-- 1 root root  578 May  5 10:36 varnishapi.pc
+
+varnish/lib/varnish:
+total 12
+drwxr-xr-x 3 root root 4096 Aug  8 20:24 .
+drwxr-xr-x 4 root root 4096 Aug  8 20:24 ..
+drwxr-xr-x 2 root root 4096 Aug  8 20:24 vmods
+
+varnish/lib/varnish/vmods:
+total 428
+drwxr-xr-x 2 root root   4096 Aug  8 20:24 .
+drwxr-xr-x 3 root root   4096 Aug  8 20:24 ..
+-rwxr-xr-x 1 root root  39128 May  5 10:36 libvmod_blob.so
+-rwxr-xr-x 1 root root  22648 May  5 10:36 libvmod_cookie.so
+-rwxr-xr-x 1 root root  97016 May  5 10:36 libvmod_debug.so
+-rwxr-xr-x 1 root root 100712 May  5 10:36 libvmod_directors.so
+-rwxr-xr-x 1 root root  18464 May  5 10:36 libvmod_proxy.so
+-rwxr-xr-x 1 root root  14192 May  5 10:36 libvmod_purge.so
+-rwxr-xr-x 1 root root  31136 May  5 10:36 libvmod_querystring.so
+-rwxr-xr-x 1 root root  47592 May  5 10:36 libvmod_std.so
+-rwxr-xr-x 1 root root  14400 May  5 10:36 libvmod_unix.so
+-rwxr-xr-x 1 root root  26912 May  5 10:36 libvmod_vtc.so
+
+varnish/licenses:
+total 20
+drwxr-xr-x  2 root root 4096 Aug  8 20:24 .
+drwxr-xr-x 10 root root 4096 Aug 23 17:16 ..
+-rw-r--r--  1 root root  128 May  5 10:36 gpl-source-links.txt
+-rw-r--r--  1 root root 1457 May  5 10:36 varnish-6.6.2.txt
+-rw-r--r--  1 root root  656 May  5 10:36 vmod-querystring-2.0.3.txt
+
+varnish/sbin:
+total 1592
+drwxr-xr-x  2 root root    4096 Aug  8 20:24 .
+drwxr-xr-x 10 root root    4096 Aug 23 17:16 ..
+-rwxr-xr-x  1 root root 1620304 May  5 10:36 varnishd
+
+varnish/share:
+total 24
+drwxr-xr-x  6 root root 4096 Aug  8 20:24 .
+drwxr-xr-x 10 root root 4096 Aug 23 17:16 ..
+drwxr-xr-x  2 root root 4096 Aug  8 20:24 aclocal
+drwxr-xr-x  4 root root 4096 Aug  8 20:24 doc
+drwxr-xr-x  5 root root 4096 Aug  8 20:24 man
+drwxr-xr-x  3 root root 4096 Aug  8 20:24 varnish
+
+varnish/share/aclocal:
+total 40
+drwxr-xr-x 2 root root  4096 Aug  8 20:24 .
+drwxr-xr-x 6 root root  4096 Aug  8 20:24 ..
+-rw-r--r-- 1 root root  4145 May  5 10:36 varnish-legacy.m4
+-rw-r--r-- 1 root root 20677 May  5 10:36 varnish.m4
+
+varnish/share/doc:
+total 16
+drwxr-xr-x 4 root root 4096 Aug  8 20:24 .
+drwxr-xr-x 6 root root 4096 Aug  8 20:24 ..
+drwxr-xr-x 2 root root 4096 Aug  8 20:24 varnish
+drwxr-xr-x 2 root root 4096 Aug  8 20:24 vmod-querystring
+
+varnish/share/doc/varnish:
+total 20
+drwxr-xr-x 2 root root 4096 Aug  8 20:24 .
+drwxr-xr-x 4 root root 4096 Aug  8 20:24 ..
+-rw-r--r-- 1 root root 5381 May  5 10:36 builtin.vcl
+-rw-r--r-- 1 root root 1190 May  5 10:36 example.vcl
+
+varnish/share/doc/vmod-querystring:
+total 20
+drwxr-xr-x 2 root root 4096 Aug  8 20:24 .
+drwxr-xr-x 4 root root 4096 Aug  8 20:24 ..
+-rw-r--r-- 1 root root 2718 May  5 10:36 CHANGELOG
+-rw-r--r-- 1 root root  411 May  5 10:36 CONTRIBUTORS
+-rw-r--r-- 1 root root  656 May  5 10:36 LICENSE
+
+varnish/share/man:
+total 20
+drwxr-xr-x 5 root root 4096 Aug  8 20:24 .
+drwxr-xr-x 6 root root 4096 Aug  8 20:24 ..
+drwxr-xr-x 2 root root 4096 Aug  8 20:24 man1
+drwxr-xr-x 2 root root 4096 Aug  8 20:24 man3
+drwxr-xr-x 2 root root 4096 Aug  8 20:24 man7
+
+varnish/share/man/man1:
+total 132
+drwxr-xr-x 2 root root  4096 Aug  8 20:24 .
+drwxr-xr-x 5 root root  4096 Aug  8 20:24 ..
+-rw-r--r-- 1 root root  3539 May  5 10:36 varnishadm.1
+-rw-r--r-- 1 root root 63875 May  5 10:36 varnishd.1
+-rw-r--r-- 1 root root  6539 May  5 10:36 varnishhist.1
+-rw-r--r-- 1 root root  7280 May  5 10:36 varnishlog.1
+-rw-r--r-- 1 root root 12464 May  5 10:36 varnishncsa.1
+-rw-r--r-- 1 root root  6710 May  5 10:36 varnishstat.1
+-rw-r--r-- 1 root root  7024 May  5 10:36 varnishtest.1
+-rw-r--r-- 1 root root  6719 May  5 10:36 varnishtop.1
+
+varnish/share/man/man3:
+total 148
+drwxr-xr-x 2 root root  4096 Aug  8 20:24 .
+drwxr-xr-x 5 root root  4096 Aug  8 20:24 ..
+-rw-r--r-- 1 root root 18303 May  5 10:36 vmod_blob.3
+-rw-r--r-- 1 root root  7992 May  5 10:36 vmod_cookie.3
+-rw-r--r-- 1 root root 29189 May  5 10:36 vmod_directors.3
+-rw-r--r-- 1 root root  5253 May  5 10:36 vmod_proxy.3
+-rw-r--r-- 1 root root  4605 May  5 10:36 vmod_purge.3
+-rw-r--r-- 1 root root  8717 May  5 10:36 vmod_querystring.3
+-rw-r--r-- 1 root root 28710 May  5 10:36 vmod_std.3
+-rw-r--r-- 1 root root  4630 May  5 10:36 vmod_unix.3
+-rw-r--r-- 1 root root  8544 May  5 10:36 vmod_vtc.3
+
+varnish/share/man/man7:
+total 224
+drwxr-xr-x 2 root root  4096 Aug  8 20:24 .
+drwxr-xr-x 5 root root  4096 Aug  8 20:24 ..
+-rw-r--r-- 1 root root 20050 May  5 10:36 varnish-cli.7
+-rw-r--r-- 1 root root 41395 May  5 10:36 varnish-counters.7
+-rw-r--r-- 1 root root 13241 May  5 10:36 vcl.7
+-rw-r--r-- 1 root root  5568 May  5 10:36 vcl-backend.7
+-rw-r--r-- 1 root root  5857 May  5 10:36 vcl-probe.7
+-rw-r--r-- 1 root root 35023 May  5 10:36 vcl-var.7
+-rw-r--r-- 1 root root 28502 May  5 10:36 vsl.7
+-rw-r--r-- 1 root root 12720 May  5 10:36 vsl-query.7
+-rw-r--r-- 1 root root 39632 May  5 10:36 vtc.7
+
+varnish/share/varnish:
+total 64
+drwxr-xr-x 3 root root  4096 Aug  8 20:24 .
+drwxr-xr-x 6 root root  4096 Aug  8 20:24 ..
+drwxr-xr-x 2 root root  4096 Aug  8 20:24 vcl
+-rwxr-xr-x 1 root root 35455 May  5 10:36 vmodtool.py
+-rwxr-xr-x 1 root root 15640 May  5 10:36 vsctool.py
+
+varnish/share/varnish/vcl:
+total 16
+drwxr-xr-x 2 root root 4096 Aug  8 20:24 .
+drwxr-xr-x 3 root root 4096 Aug  8 20:24 ..
+-rw-r--r-- 1 root root 6295 May  5 10:36 devicedetect.vcl
+
+varnish/var:
+total 12
+drwxr-xr-x  3 root root 4096 Aug  8 20:24 .
+drwxr-xr-x 10 root root 4096 Aug 23 17:16 ..
+drwxrwxr-x  2 root root 4096 Jan  1  1970 varnish
+
+varnish/var/varnish:
+total 8
+drwxrwxr-x 2 root root 4096 Jan  1  1970 .
+drwxr-xr-x 3 root root 4096 Aug  8 20:24 ..

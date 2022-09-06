@@ -1,0 +1,97 @@
+common:
+total 24
+drwxr-xr-x  6 root root 4096 Aug  8 21:35 .
+drwxr-xr-x 19 root root 4096 Aug 23 17:34 ..
+drwxr-xr-x  2 root root 4096 Aug 20 12:45 bin
+drwxr-xr-x  3 root root 4096 Aug  8 21:35 include
+drwxr-xr-x  3 root root 4096 Aug  8 21:35 lib
+drwxr-xr-x  2 root root 4096 Aug  8 21:35 licenses
+
+common/bin:
+total 6604
+drwxr-xr-x 2 root root    4096 Aug 20 12:45 .
+drwxr-xr-x 6 root root    4096 Aug  8 21:35 ..
+-rwxr-xr-x 1 root root 2289664 Jul  6 23:27 gosu
+-rwxr-xr-x 1 root root 1855488 May 19 21:07 ini-file
+-rwxr-xr-x 1 root root   23232 Aug 20 12:23 mmdblookup
+-rwxr-xr-x 1 root root 2582136 May 30 16:02 render-template
+
+common/include:
+total 28
+drwxr-xr-x 3 root root 4096 Aug  8 21:35 .
+drwxr-xr-x 6 root root 4096 Aug  8 21:35 ..
+-rw-r--r-- 1 root root  504 Aug 20 12:23 maxminddb_config.h
+-rw-r--r-- 1 root root 8543 Aug 20 12:23 maxminddb.h
+drwxr-xr-x 4 root root 4096 Aug  8 21:35 modsecurity
+
+common/include/modsecurity:
+total 152
+drwxr-xr-x 4 root root  4096 Aug  8 21:35 .
+drwxr-xr-x 3 root root  4096 Aug  8 21:35 ..
+drwxr-xr-x 2 root root  4096 Aug  8 21:35 actions
+-rw-r--r-- 1 root root  2881 Aug  8 14:06 anchored_set_variable.h
+-rw-r--r-- 1 root root  3686 Aug  8 14:06 anchored_set_variable_translation_proxy.h
+-rw-r--r-- 1 root root  2095 Aug  8 14:06 anchored_variable.h
+-rw-r--r-- 1 root root  5702 Aug  8 14:06 audit_log.h
+drwxr-xr-x 2 root root  4096 Aug  8 21:35 collection
+-rw-r--r-- 1 root root  1572 Aug  8 14:06 debug_log.h
+-rw-r--r-- 1 root root  1656 Aug  8 14:06 intervention.h
+-rw-r--r-- 1 root root  8563 Aug  8 14:06 modsecurity.h
+-rw-r--r-- 1 root root  3125 Aug  8 14:06 rule.h
+-rw-r--r-- 1 root root  2239 Aug  8 14:06 rule_marker.h
+-rw-r--r-- 1 root root  6634 Aug  8 14:06 rule_message.h
+-rw-r--r-- 1 root root  2934 Aug  8 14:06 rules_exceptions.h
+-rw-r--r-- 1 root root  2861 Aug  8 14:06 rules.h
+-rw-r--r-- 1 root root  2648 Aug  8 14:06 rules_set.h
+-rw-r--r-- 1 root root  1378 Aug  8 14:06 rules_set_phases.h
+-rw-r--r-- 1 root root 14497 Aug  8 14:06 rules_set_properties.h
+-rw-r--r-- 1 root root  1797 Aug  8 14:06 rule_unconditional.h
+-rw-r--r-- 1 root root  5934 Aug  8 14:06 rule_with_actions.h
+-rw-r--r-- 1 root root  2317 Aug  8 14:06 rule_with_operator.h
+-rw-r--r-- 1 root root 23509 Aug  8 14:06 transaction.h
+-rw-r--r-- 1 root root  1227 Aug  8 14:06 variable_origin.h
+-rw-r--r-- 1 root root  2848 Aug  8 14:06 variable_value.h
+
+common/include/modsecurity/actions:
+total 12
+drwxr-xr-x 2 root root 4096 Aug  8 21:35 .
+drwxr-xr-x 4 root root 4096 Aug  8 21:35 ..
+-rw-r--r-- 1 root root 4066 Aug  8 14:06 action.h
+
+common/include/modsecurity/collection:
+total 20
+drwxr-xr-x 2 root root 4096 Aug  8 21:35 .
+drwxr-xr-x 4 root root 4096 Aug  8 21:35 ..
+-rw-r--r-- 1 root root 6288 Aug  8 14:06 collection.h
+-rw-r--r-- 1 root root 1917 Aug  8 14:06 collections.h
+
+common/lib:
+total 2404
+drwxr-xr-x 3 root root    4096 Aug  8 21:35 .
+drwxr-xr-x 6 root root    4096 Aug  8 21:35 ..
+lrwxrwxrwx 1 root root      21 Aug 20 12:23 libmaxminddb.so -> libmaxminddb.so.0.0.7
+lrwxrwxrwx 1 root root      21 Aug 20 12:23 libmaxminddb.so.0 -> libmaxminddb.so.0.0.7
+-rwxr-xr-x 1 root root   22640 Aug 20 12:23 libmaxminddb.so.0.0.7
+lrwxrwxrwx 1 root root      23 Aug  8 14:06 libmodsecurity.so -> libmodsecurity.so.3.0.7
+lrwxrwxrwx 1 root root      23 Aug  8 14:06 libmodsecurity.so.3 -> libmodsecurity.so.3.0.7
+-rwxr-xr-x 1 root root 2422064 Aug  8 14:07 libmodsecurity.so.3.0.7
+drwxr-xr-x 2 root root    4096 Aug  8 21:35 pkgconfig
+
+common/lib/pkgconfig:
+total 16
+drwxr-xr-x 2 root root 4096 Aug  8 21:35 .
+drwxr-xr-x 3 root root 4096 Aug  8 21:35 ..
+-rw-r--r-- 1 root root  301 Aug 20 12:23 libmaxminddb.pc
+-rw-r--r-- 1 root root  285 Aug  8 14:06 modsecurity.pc
+
+common/licenses:
+total 100
+drwxr-xr-x 2 root root  4096 Aug  8 21:35 .
+drwxr-xr-x 6 root root  4096 Aug  8 21:35 ..
+-rw-r--r-- 1 root root 11358 Jul  6 23:27 gosu-1.14.0.txt
+-rw-r--r-- 1 root root    67 Jul  6 23:27 gpl-source-links.txt
+-rw-r--r-- 1 root root 11359 Aug 20 12:17 imap-2007.0.0.txt
+-rw-r--r-- 1 root root 18092 May 19 21:07 ini-file-1.4.3.txt
+-rw-r--r-- 1 root root 11358 Aug 20 12:23 libmaxminddb-1.6.0.txt
+-rw-r--r-- 1 root root 11357 Aug  8 14:06 modsecurity-3.0.7.txt
+-rw-r--r-- 1 root root 18092 May 30 16:02 render-template-1.0.3.txt

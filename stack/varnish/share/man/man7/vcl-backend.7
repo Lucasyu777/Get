@@ -1,0 +1,251 @@
+.\" Man page generated from reStructuredText.
+.
+.TH VCL-BACKENDS 7 "" "" ""
+.SH NAME
+VCL-backends \- Configuring Backends
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.\" Copyright (c) 2021 Varnish Software AS
+.\" SPDX-License-Identifier: BSD-2-Clause
+.\" See LICENSE file for full text of license
+.
+.SH BACKEND DEFINITION
+.sp
+A backend declaration creates and initialises a named backend object.
+A declaration start with the keyword \fBbackend\fP followed by the name of the
+backend. The actual declaration is in curly brackets, in a key/value fashion.:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+backend name {
+    .attribute1 = value;
+    .attribute2 = value;
+    [...]
+}
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+If there is a backend named \fBdefault\fP it will be used unless another
+backend is explicitly set.  If no backend is named \fBdefault\fP the first
+backend in the VCL program becomes the default.
+.sp
+If you only use dynamic backends created by VMODs, an empty, always failing
+(503) backend can be specified:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+backend default none;
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+A backend must be specified with either a \fB\&.host\fP or a \fB\&.path\fP attribute, but
+not both.  All other attributes have default values.
+.SH ATTRIBUTE .HOST
+.sp
+To specify a networked backend \fB\&.host\fP takes either a numeric
+IPv4/IPv6 address or a domain name which resolves to \fIat most\fP
+one IPv4 and one IPv6 address:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+\&.host = "127.0.0.1";
+
+\&.host = "[::1]:8080";
+
+\&.host = "example.com:8081";
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+The TCP port number can be specied as part of \fB\&.host\fP as a bove
+or separately using the \fB\&.port\fP attribute:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+\&.port = 8081;
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.SH ATTRIBUTE .PATH
+.sp
+The absolute path to a Unix(4) domain socket of a local backend:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+\&.path = "/var/run/http.sock";
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+A warning will be issued if the uds\-socket does not exist when the
+VCL is loaded.  This makes it possible to start the UDS\-listening peer,
+or set the socket file\(aqs permissions afterwards.
+.sp
+If the uds\-socket socket does not exist or permissions deny access,
+connection attempts will fail.
+.SH ATTRIBUTE .HOST_HEADER
+.sp
+A host header to add to probes and regular backend requests if they have no such header:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+\&.host_header = "Host: example.com";
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.SH TIMEOUT ATTRIBUTES
+.sp
+These attributes control how patient \fIvarnishd\fP is during backend fetches:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+\&.connect_timeout = 1.4s;
+\&.first_byte_timeout = 20s;
+\&.between_bytes_timeout = 10s;
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+The default values comes parameters with the same names, see \fIvarnishd(1)\fP\&.
+.SH ATTRIBUTE .MAX_CONNECTIONS
+.sp
+Limit how many simultaneous connections varnish can open to the backend:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+\&.max_connections = 1000;
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.SH ATTRIBUTE .PROXY_HEADER
+.sp
+Send a PROXY protocol header to the backend with the \fBclient.ip\fP and
+\fBserver.ip\fP values:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+\&.proxy_header = 2;
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+Legal values are one and two, depending which version of the PROXY protocol you want.
+.sp
+\fINotice\fP this setting will lead to backend connections being used
+for a single request only (subject to future improvements). Thus,
+extra care should be taken to avoid running into failing backend
+connections with EADDRNOTAVAIL due to no local ports being
+available. Possible options are:
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+Use additional backend connections to extra IP addresses or TCP ports
+.IP \(bu 2
+Increase the number of available ports (Linux sysctl \fBnet.ipv4.ip_local_port_range\fP)
+.IP \(bu 2
+Reuse backend connection ports early (Linux sysctl \fBnet.ipv4.tcp_tw_reuse\fP)
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.SH ATTRIBUTE .PREAMBLE
+.sp
+Send a BLOB on all newly opened connections to the backend:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+\&.preamble = :SGVsbG8gV29ybGRcbgo=:;
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.SH ATTRIBUTE .PROBE
+.sp
+Please see \fIvcl\-probe(7)\fP\&.
+.SH SEE ALSO
+.INDENT 0.0
+.IP \(bu 2
+\fIvarnishd(1)\fP
+.IP \(bu 2
+\fIvcl(7)\fP
+.IP \(bu 2
+\fIvcl\-probe(7)\fP
+.IP \(bu 2
+\fIvmod_directors(3)\fP
+.IP \(bu 2
+\fIvmod_std(3)\fP
+.UNINDENT
+.SH HISTORY
+.sp
+VCL was developed by Poul\-Henning Kamp in cooperation with Verdens
+Gang AS, Redpill Linpro and Varnish Software.  This manual page is
+written by Per Buer, Poul\-Henning Kamp, Martin Blix Grydeland,
+Kristian Lyngstøl, Lasse Karstensen and others.
+.SH COPYRIGHT
+.sp
+This document is licensed under the same license as Varnish
+itself. See LICENSE for details.
+.INDENT 0.0
+.IP \(bu 2
+Copyright (c) 2006 Verdens Gang AS
+.IP \(bu 2
+Copyright (c) 2006\-2021 Varnish Software AS
+.UNINDENT
+.\" Generated by docutils manpage writer.
+.

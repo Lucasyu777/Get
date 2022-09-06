@@ -1,0 +1,22 @@
+prefix=/opt/bitnami/varnish
+exec_prefix=${prefix}
+bindir=${exec_prefix}/bin
+sbindir=${exec_prefix}/sbin
+libdir=${exec_prefix}/lib
+sysconfdir=${prefix}/etc
+pkgsysconfdir=${sysconfdir}/varnish
+includedir=${prefix}/include
+pkgincludedir=${includedir}/varnish
+datarootdir=${prefix}/share
+datadir=${datarootdir}
+pkgdatadir=${datadir}/varnish
+vcldir=${pkgdatadir}/vcl
+vmoddir=${libdir}/varnish/vmods
+vmodtool=${pkgdatadir}/vmodtool.py
+vsctool=${pkgdatadir}/vsctool.py
+
+Name: VarnishAPI
+Description: Varnish API
+Version: 6.6.2
+Cflags: -I${pkgincludedir}
+Libs: -L${libdir} -lvarnishapi

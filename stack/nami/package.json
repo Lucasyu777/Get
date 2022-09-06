@@ -1,0 +1,10 @@
+{
+  "name": "provisioner-bundle",
+  "description": "Nami Provisioner bundle",
+  "version": "0.3.0",
+  "license": "GPL-2.0",
+  "dependencies": {
+    "provisioner": "0.3.0",
+    "semver": "^7.3.7"
+  }
+}

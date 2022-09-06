@@ -1,0 +1,1 @@
+phpmyadmin-5.2.0,GPL2,https://files.phpmyadmin.net/phpMyAdmin/5.2.0/phpMyAdmin-5.2.0-all-languages.tar.gz

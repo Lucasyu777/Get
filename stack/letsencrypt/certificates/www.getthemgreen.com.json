@@ -1,0 +1,5 @@
+{
+	"domain": "www.getthemgreen.com",
+	"certUrl": "https://acme-v02.api.letsencrypt.org/acme/cert/0493f7b738e43e976d78dd9a282e3d0f26dc",
+	"certStableUrl": "https://acme-v02.api.letsencrypt.org/acme/cert/0493f7b738e43e976d78dd9a282e3d0f26dc"
+}

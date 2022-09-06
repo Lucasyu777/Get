@@ -1,0 +1,1 @@
+vmod-querystring-2.0.3,GPL3+,https://github.com/Dridi/libvmod-querystring/releases/download/v2.0.3/vmod-querystring-2.0.3.tar.gz
