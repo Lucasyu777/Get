@@ -1,0 +1,13 @@
+{
+    "autoload": {
+        "psr-4": {
+            "NinjaCharts\\": "app/",
+            "NinjaCharts\\Database\\": "database/",
+            "NinjaCharts\\Framework\\": "vendor/framework"
+        },
+        "classmap": ["database"],
+        "files": [
+            "boot/globals.php"
+        ]
+    }
+}
