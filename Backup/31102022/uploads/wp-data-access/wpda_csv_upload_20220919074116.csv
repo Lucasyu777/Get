@@ -1,0 +1,9 @@
+﻿Waste_type,Situation,Amount
+Food ,Produced,60
+Food ,Reduced_waste,30
+Electric,Produced,40
+Electric,Reduced_waste,20
+Water,Produced,81
+Water,Reduced_waste,40.5
+Plastic,Produced,80
+Plastic,Reduced_waste,40
